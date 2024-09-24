@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/personnal/', include('personnalApp.urls')),
     path('api/title/', include('titleApp.urls')),
     path('api/lang/', include('langApp.urls')),
+    path('api/experience/', include('experienceApp.urls')),
 ]
