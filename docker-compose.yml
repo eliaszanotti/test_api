@@ -1,0 +1,69 @@
+services:
+  caddy:
+    image: caddy:2.8.4-alpine
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - static_volume:/static
+      - media_volume:/media
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    networks:
+      - refactor
+
+  mysql:
+    image: mysql:9.0.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 30
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - refactor
+
+  django:
+    build:
+      context: ./django
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./django:/usr/src/django
+      - static_volume:/static
+      - media_volume:/media
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - refactor
+
+  vue:
+    build:
+      context: ./vue
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./vue:/usr/src/vue
+    command: npm run dev
+    networks:
+      - refactor
+
+volumes:
+  mysql_data:
+  caddy_data:
+  static_volume:
+  media_volume:
+
+networks:
+  refactor:
+    driver: bridge
