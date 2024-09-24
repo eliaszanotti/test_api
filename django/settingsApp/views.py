@@ -28,9 +28,7 @@ class SettingsGetView(generics.GenericAPIView):
 
         settings, created = Settings.objects.get_or_create(cv=cv)
         serializer = self.get_serializer(settings)
-        data = serializer.data
-        data['color_schemes'] = SCHEMES
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class SettingsUpdateView(generics.GenericAPIView):
     serializer_class = SettingsSerializer
@@ -52,3 +50,12 @@ class SettingsUpdateView(generics.GenericAPIView):
             settings.save()
             return Response({"success": "Fields updated successfully."}, status=status.HTTP_200_OK)
         return Response({"error": "No valid fields provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+class ColorSchemeGetView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        scheme_id = kwargs.get('id')
+        if scheme_id is None or not scheme_id.isdigit() or int(scheme_id) >= len(SCHEMES):
+            return Response({"error": "Invalid scheme ID."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        scheme = SCHEMES[int(scheme_id)]
+        return Response(scheme, status=status.HTTP_200_OK)
