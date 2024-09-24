@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'langApp',
     'experienceApp',
     'formationApp',
+    'hobbieApp',
 ]
 
 REST_FRAMEWORK = {
