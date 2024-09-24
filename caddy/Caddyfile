@@ -8,6 +8,11 @@
     handle_path /api/* {
         reverse_proxy django:8000
     }
+
+	handle_path /api/static/* {
+        root * /static
+        file_server
+    }
 }
 
 https://localhost {
@@ -15,5 +20,10 @@ https://localhost {
 
     handle_path /api/* {
         reverse_proxy django:8000
+    }
+
+	handle_path /api/static/* {
+        root * /static
+        file_server
     }
 }

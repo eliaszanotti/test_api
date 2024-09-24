@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,8 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y6&a7w#h61a5y!8jx$)bxe9#y2+6h0efwcya%)rku(&=sq8y+3'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+STATIC_URL = '/api/static/'
+STATIC_ROOT = '/static'
+MEDIA_URL = '/api/media/'
+MEDIA_ROOT = '/media'
+
+if os.getenv('APP_MODE') == 'prod':
+    DEBUG = False
+    # SITE_URL = 'http://caddy'
+else:
+    DEBUG = True
+    # SITE_URL = 'http://django:8000
+
 
 ALLOWED_HOSTS = []
 
