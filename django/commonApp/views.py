@@ -1,5 +1,7 @@
-from rest_framework import serializers, generics
+from rest_framework import serializers, generics, status
+from rest_framework.response import Response
 from django.contrib.auth import get_user_model
+from cvApp.models import Cv
 
 User = get_user_model()
 
@@ -37,3 +39,38 @@ class BaseDeleteView(generics.DestroyAPIView):
         user = self.request.user
         cv = user.current_cv
         return self.model.objects.filter(cv=cv)
+
+class BaseGetView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        cv = user.current_cv
+
+        if not cv:
+            cv = Cv.objects.filter(user=user).first()
+            if not cv:
+                cv = Cv.objects.create(user=user)
+                user.current_cv = cv
+                user.save()
+
+        instance, created = self.model.objects.get_or_create(cv=cv)
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class BaseUpdateGenericView(generics.GenericAPIView):
+    def put(self, request, *args, **kwargs):
+        user = self.request.user
+        cv = user.current_cv
+        if not cv:
+            return Response({"error": "No current CV found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        instance, created = self.model.objects.get_or_create(cv=cv)
+        updated = False
+        for field, value in request.data.items():
+            if hasattr(instance, field):
+                setattr(instance, field, value)
+                updated = True
+
+        if updated:
+            instance.save()
+            return Response({"success": "Fields updated successfully."}, status=status.HTTP_200_OK)
+        return Response({"error": "No valid fields provided."}, status=status.HTTP_400_BAD_REQUEST)
