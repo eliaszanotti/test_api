@@ -11,6 +11,9 @@ class SettingsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SettingsGetView(BaseGetView):
+    """
+    We override the get method to add sizes from a constants file.
+    """
     serializer_class = SettingsSerializer
     model = Settings
 
@@ -24,6 +27,10 @@ class SettingsUpdateView(BaseUpdateGenericView):
     model = Settings
 
 class ColorSchemeGetView(generics.GenericAPIView):
+    """
+    This function retrieves the color scheme associated with the given template ID.
+    It returns the scheme if the ID is valid, otherwise it returns an error message.
+    """
     def get(self, request, *args, **kwargs):
         scheme_id = kwargs.get('id')
         if scheme_id is None or not scheme_id.isdigit() or int(scheme_id) >= len(SCHEMES):
