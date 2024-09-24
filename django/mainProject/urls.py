@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/settings/', include('settingsApp.urls')),
     path('api/personnal/', include('personnalApp.urls')),
     path('api/title/', include('titleApp.urls')),
+    path('api/lang/', include('langApp.urls')),
 ]

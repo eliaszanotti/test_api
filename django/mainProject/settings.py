@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'settingsApp',
     'personnalApp',
     'titleApp',
+    'langApp',
 ]
 
 REST_FRAMEWORK = {
