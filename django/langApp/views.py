@@ -1,47 +1,22 @@
-from rest_framework import serializers, generics
+from commonApp.views import BaseModelSerializer, BaseListView, BaseCreateView, BaseUpdateView, BaseDeleteView
 from .models import Lang
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
-
-class LangSerializer(serializers.ModelSerializer):
-    class Meta:
+class LangSerializer(BaseModelSerializer):
+    class Meta(BaseModelSerializer.Meta):
         model = Lang
-        exclude = ['cv']
 
-class LangListView(generics.ListAPIView):
+class LangListView(BaseListView):
     serializer_class = LangSerializer
+    model = Lang
 
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        return Lang.objects.filter(cv=cv)
-
-class LangCreateView(generics.CreateAPIView):
+class LangCreateView(BaseCreateView):
     serializer_class = LangSerializer
+    model = Lang
 
-    def perform_create(self, serializer):
-        cv = self.request.user.current_cv
-        Lang.objects.create(cv=cv)
-
-class LangUpdateView(generics.UpdateAPIView):
+class LangUpdateView(BaseUpdateView):
     serializer_class = LangSerializer
-    lookup_field = 'id'
+    model = Lang
 
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        queryset = Lang.objects.filter(cv=cv)
-        lang_id = self.kwargs.get('id')
-        if not queryset.filter(id=lang_id).exists():
-            raise serializers.ValidationError("This language is not part of your CV.")
-        return queryset
-
-class LangDeleteView(generics.DestroyAPIView):
+class LangDeleteView(BaseDeleteView):
     serializer_class = LangSerializer
-    lookup_field = 'id'
-
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        return Lang.objects.filter(cv=cv)
+    model = Lang
