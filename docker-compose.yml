@@ -1,17 +1,17 @@
 services:
-  caddy:
-    image: caddy:2.8.4-alpine
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - static_volume:/static
-      - media_volume:/media
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: always
-    networks:
-      - refactor
+  # caddy:
+  #   image: caddy:2.8.4-alpine
+  #   volumes:
+  #     - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - static_volume:/static
+  #     - media_volume:/media
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   restart: always
+  #   networks:
+  #     - refactor
 
   mysql:
     image: mysql:9.0.1
@@ -47,16 +47,16 @@ services:
     networks:
       - refactor
 
-  vue:
-    build:
-      context: ./vue
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./vue:/usr/src/vue
-    command: npm run dev
-    networks:
-      - refactor
+  # vue:
+  #   build:
+  #     context: ./vue
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./vue:/usr/src/vue
+  #   command: npm run dev
+  #   networks:
+  #     - refactor
 
 volumes:
   mysql_data:
