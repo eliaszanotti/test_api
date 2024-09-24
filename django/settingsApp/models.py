@@ -10,3 +10,4 @@ class Settings(models.Model):
 	third_color = models.CharField(max_length=7, blank=True)
 	dark_color = models.CharField(max_length=7, blank=True)
 	light_color = models.CharField(max_length=7, blank=True)
+	size = models.CharField(max_length=50, blank=True)

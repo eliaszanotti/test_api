@@ -4,6 +4,7 @@ from .models import Settings
 from cvApp.models import Cv
 from django.contrib.auth import get_user_model
 from .schemes import SCHEMES
+from .sizes import SIZES
 
 User = get_user_model()
 
@@ -28,7 +29,9 @@ class SettingsGetView(generics.GenericAPIView):
 
         settings, created = Settings.objects.get_or_create(cv=cv)
         serializer = self.get_serializer(settings)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response_data = serializer.data
+        response_data['sizes'] = SIZES
+        return Response(response_data, status=status.HTTP_200_OK)
 
 class SettingsUpdateView(generics.GenericAPIView):
     serializer_class = SettingsSerializer
