@@ -1,0 +1,19 @@
+{
+    log {
+        level WARN
+    }
+}
+
+:80 {
+    handle_path /api/* {
+        reverse_proxy django:8000
+    }
+}
+
+https://localhost {
+    tls internal
+
+    handle_path /api/* {
+        reverse_proxy django:8000
+    }
+}
