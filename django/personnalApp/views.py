@@ -28,3 +28,24 @@ class PersonnalGetView(generics.GenericAPIView):
         personnal, created = Personnal.objects.get_or_create(cv=cv)
         serializer = self.get_serializer(personnal)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class PersonnalUpdateView(generics.GenericAPIView):
+    serializer_class = PersonnalSerializer
+
+    def put(self, request, *args, **kwargs):
+        user = self.request.user
+        cv = user.current_cv
+        if not cv:
+            return Response({"error": "No current CV found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        personnal, created = Personnal.objects.get_or_create(cv=cv)
+        updated = False
+        for field, value in request.data.items():
+            if hasattr(personnal, field):
+                setattr(personnal, field, value)
+                updated = True
+
+        if updated:
+            personnal.save()
+            return Response({"success": "Fields updated successfully."}, status=status.HTTP_200_OK)
+        return Response({"error": "No valid fields provided."}, status=status.HTTP_400_BAD_REQUEST)
