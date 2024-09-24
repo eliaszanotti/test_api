@@ -11,15 +11,7 @@ class PersonnalSerializer(serializers.ModelSerializer):
 		model = Personnal
 		fields = '__all__'
 
-class ItemListCreateView(generics.ListCreateAPIView):
-	queryset = Personnal.objects.all()
-	serializer_class = PersonnalSerializer
-
-class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Personnal.objects.all()
-	serializer_class = PersonnalSerializer
-
-class PersonnalGetOrCreateView(generics.GenericAPIView):
+class PersonnalGetView(generics.GenericAPIView):
     serializer_class = PersonnalSerializer
 
     def get(self, request, *args, **kwargs):
@@ -29,7 +21,7 @@ class PersonnalGetOrCreateView(generics.GenericAPIView):
         if not cv:
             cv = Cv.objects.filter(user=user).first()
             if not cv:
-                cv = Cv.objects.create(user=user, name="Nouveau CV")
+                cv = Cv.objects.create(user=user)
                 user.current_cv = cv
                 user.save()
 
