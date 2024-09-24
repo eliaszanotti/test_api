@@ -1,7 +1,8 @@
 from django.db import models
+from cvApp.models import Cv
 
 class Personnal(models.Model):
-	# cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='personnal')
+	cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='personnal')
 	# picture = models.ImageField(upload_to='pictures/', null=True, blank=True, default="")
 	is_hidden = models.BooleanField(default=False)
 	name = models.CharField(max_length=50, blank=True)
