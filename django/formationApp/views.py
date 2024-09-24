@@ -1,47 +1,22 @@
-from rest_framework import serializers, generics
+from commonApp.views import BaseModelSerializer, BaseListView, BaseCreateView, BaseUpdateView, BaseDeleteView
 from .models import Formation
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
-
-class FormationSerializer(serializers.ModelSerializer):
-    class Meta:
+class FormationSerializer(BaseModelSerializer):
+    class Meta(BaseModelSerializer.Meta):
         model = Formation
-        exclude = ['cv']
 
-class FormationListView(generics.ListAPIView):
+class FormationListView(BaseListView):
     serializer_class = FormationSerializer
+    model = Formation
 
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        return Formation.objects.filter(cv=cv)
-
-class FormationCreateView(generics.CreateAPIView):
+class FormationCreateView(BaseCreateView):
     serializer_class = FormationSerializer
+    model = Formation
 
-    def perform_create(self, serializer):
-        cv = self.request.user.current_cv
-        Formation.objects.create(cv=cv)
-
-class FormationUpdateView(generics.UpdateAPIView):
+class FormationUpdateView(BaseUpdateView):
     serializer_class = FormationSerializer
-    lookup_field = 'id'
+    model = Formation
 
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        queryset = Formation.objects.filter(cv=cv)
-        formation_id = self.kwargs.get('id')
-        if not queryset.filter(id=formation_id).exists():
-            raise serializers.ValidationError("This formation is not part of your CV.")
-        return queryset
-
-class FormationDeleteView(generics.DestroyAPIView):
+class FormationDeleteView(BaseDeleteView):
     serializer_class = FormationSerializer
-    lookup_field = 'id'
-
-    def get_queryset(self):
-        user = self.request.user
-        cv = user.current_cv
-        return Formation.objects.filter(cv=cv)
+    model = Formation
