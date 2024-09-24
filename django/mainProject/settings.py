@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'authApp',
     'cvApp',
-	'personnalApp',
+    'settingsApp',
+    'personnalApp',
     'titleApp',
 ]
 
