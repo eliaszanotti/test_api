@@ -25,7 +25,15 @@ class CvDetailView(generics.RetrieveAPIView):
 
 	def get_object(self):
 		user = self.request.user
-		return user.current_cv
+		cv = user.current_cv
+
+		if not cv:
+			cv = Cv.objects.filter(user=user).first()
+			if not cv:
+				cv = Cv.objects.create(user=user)
+				user.current_cv = cv
+				user.save()
+		return cv
 
 class CvListView(generics.ListAPIView):
 	serializer_class = CvSerializer
