@@ -3,6 +3,7 @@ from rest_framework import serializers, generics, status
 from .models import Settings
 from cvApp.models import Cv
 from django.contrib.auth import get_user_model
+from .schemes import SCHEMES
 
 User = get_user_model()
 
@@ -27,7 +28,9 @@ class SettingsGetView(generics.GenericAPIView):
 
         settings, created = Settings.objects.get_or_create(cv=cv)
         serializer = self.get_serializer(settings)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data = serializer.data
+        data['color_schemes'] = SCHEMES
+        return Response(data, status=status.HTTP_200_OK)
 
 class SettingsUpdateView(generics.GenericAPIView):
     serializer_class = SettingsSerializer
