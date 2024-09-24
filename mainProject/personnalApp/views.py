@@ -1,16 +1,16 @@
 from django.shortcuts import render
 from rest_framework import serializers, generics
-from .models import Item
+from .models import Personnal
 
 class ItemSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Item
+		model = Personnal
 		fields = '__all__'
 
 class ItemListCreateView(generics.ListCreateAPIView):
-	queryset = Item.objects.all()
+	queryset = Personnal.objects.all()
 	serializer_class = ItemSerializer
 
 class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Item.objects.all()
+	queryset = Personnal.objects.all()
 	serializer_class = ItemSerializer
