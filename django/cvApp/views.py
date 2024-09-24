@@ -33,3 +33,11 @@ class CvListView(generics.ListAPIView):
 	def get_queryset(self):
 		user = self.request.user
 		return Cv.objects.filter(user=user)
+
+class CvDeleteView(generics.DestroyAPIView):
+	serializer_class = CvSerializer
+	lookup_field = 'id'
+
+	def get_queryset(self):
+		user = self.request.user
+		return Cv.objects.filter(user=user)
