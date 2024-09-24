@@ -31,7 +31,11 @@ class LangUpdateView(generics.UpdateAPIView):
     def get_queryset(self):
         user = self.request.user
         cv = user.current_cv
-        return Lang.objects.filter(cv=cv)
+        queryset = Lang.objects.filter(cv=cv)
+        lang_id = self.kwargs.get('id')
+        if not queryset.filter(id=lang_id).exists():
+            raise serializers.ValidationError("This language is not part of your CV.")
+        return queryset
 
 class LangDeleteView(generics.DestroyAPIView):
     serializer_class = LangSerializer
