@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
+import router from '@/router';
 
 const apiClient = axios.create({
     baseURL: '/api',
@@ -25,12 +26,15 @@ apiClient.interceptors.response.use(
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                await authStore.tokenRefresh();
-                originalRequest.headers['Authorization'] = `Bearer ${authStore.accessToken}`;
-                return await apiClient(originalRequest);
+                const response = await axios.post('/api/auth/refresh/', {}, { withCredentials: true });
+                const { access } = response.data;
+                authStore.accessToken = access;
+                localStorage.setItem('accessToken', access);
+                originalRequest.headers['Authorization'] = `Bearer ${access}`;
+                return await axios(originalRequest);
             } catch (refreshError) {
-                rooter.push('/login');
-                console.error('Refresh Token error:', refreshError);
+                authStore.logout();
+                router.push('/login');
                 return Promise.reject(refreshError);
             }
         }
