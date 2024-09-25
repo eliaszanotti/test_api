@@ -6,6 +6,9 @@ export const useAuthStore = defineStore('auth', {
 		username: '',
         accessToken: localStorage.getItem('accessToken') || '',
 	}),
+	getters: {
+		isLogged: (state) => !!state.accessToken,
+	},
 	actions: {
         async tokenRefresh() {
             try {
