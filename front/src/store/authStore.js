@@ -10,19 +10,6 @@ export const useAuthStore = defineStore('auth', {
 		isLogged: (state) => !!state.accessToken,
 	},
 	actions: {
-        async tokenRefresh() {
-            try {
-                this.accessToken = '';
-                const response = await apiClient.post('/auth/refresh/');
-
-                const { access } = response.data;
-                this.accessToken = access;
-                localStorage.setItem('accessToken', access);
-                apiClient.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
-            } catch (error) {
-                throw error;
-            }
-        },
         async login(username, password) {
             try {
                 const response = await apiClient.post('/auth/login/', {
@@ -36,6 +23,19 @@ export const useAuthStore = defineStore('auth', {
                 localStorage.setItem('accessToken', access);
                 apiClient.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
                 console.log('Login:', response.data);
+            } catch (error) {
+                throw error;
+            }
+        },
+        async tokenRefresh() {
+            try {
+                this.accessToken = '';
+                const response = await apiClient.post('/auth/refresh/');
+
+                const { access } = response.data;
+                this.accessToken = access;
+                localStorage.setItem('accessToken', access);
+                apiClient.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
             } catch (error) {
                 throw error;
             }

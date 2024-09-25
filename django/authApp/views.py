@@ -34,7 +34,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 			del response.data['refresh']
 		return response
 
-
 class CustomTokenRefreshView(TokenRefreshView):
 	def post(self, request, *args, **kwargs):
 		refresh_token = request.COOKIES.get('refresh_token')
