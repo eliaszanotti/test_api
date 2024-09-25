@@ -1,8 +1,8 @@
 FROM	node:22-alpine
 
-WORKDIR	/usr/src/vue
+WORKDIR	/usr/src/front
 
-COPY	. /usr/src/vue
+COPY	. /usr/src/front
 RUN		npm install
 EXPOSE	5173
 

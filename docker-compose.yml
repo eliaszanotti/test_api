@@ -47,16 +47,16 @@ services:
     networks:
       - refactor
 
-  # vue:
-  #   build:
-  #     context: ./vue
-  #   ports:
-  #     - "5173:5173"
-  #   volumes:
-  #     - ./vue:/usr/src/vue
-  #   command: npm run dev
-  #   networks:
-  #     - refactor
+  front:
+    build:
+      context: ./front
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front:/usr/src/front
+    command: npm run dev
+    networks:
+      - refactor
 
 volumes:
   mysql_data:
