@@ -1,8 +1,8 @@
-from rest_framework import generics, serializers
+from rest_framework import generics, serializers, status
 from .models import CustomUser
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import status
+from rest_framework.response import Response
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -38,3 +38,9 @@ class RegisterView(generics.CreateAPIView):
 	queryset = CustomUser.objects.all()
 	permission_classes = AllowAny
 	serializer_class = UserSerializer
+
+class LogoutView(generics.GenericAPIView):
+	def post(self, request, *args, **kwargs):
+		response = Response(status=status.HTTP_200_OK)
+		response.delete_cookie('refresh_token')
+		return response

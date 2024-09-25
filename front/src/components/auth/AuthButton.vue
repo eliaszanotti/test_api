@@ -1,9 +1,7 @@
 <template>
-	<div v-if="!isLogged">
-		<button @click="handleAuthAction" class="btn btn-ghost">
-			Se connecter
-		</button>
-	</div>
+	<button @click="handleAuthAction" class="btn btn-ghost">
+		{{ isLogged ? 'Se déconnecter' : 'Se connecter' }}
+	</button>
 </template>
 
 <script setup>
@@ -16,8 +14,9 @@ const isLogged = computed(() => authStore.isLogged);
 const router = useRouter();
 
 function handleAuthAction() {
-	if (!isLogged.value) {
-		router.push('/login');
+	if (isLogged.value) {
+		authStore.logout();
 	}
+	router.push('/login');
 }
 </script>
