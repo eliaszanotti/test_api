@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive } from 'vue';
 import apiClient from '@/services/api';
 import CardTitle from '../global/CardTitle.vue';
 import PictureDisplay from './PictureDisplay.vue';
@@ -35,17 +35,4 @@ const updateValue = async () => {
 		console.error('Erreur lors de la mise à jour de la visibilité de la photo');
 	}
 };
-
-const fetchData = async () => {
-	try {
-		const response = await apiClient.get('/cv_personnal/picture/');
-		Object.assign(data, response.data);
-	} catch (error) {
-		console.error('Erreur lors de la récupération de l\'image');
-	}
-};
-
-onMounted(() => {
-	fetchData();
-});
 </script>

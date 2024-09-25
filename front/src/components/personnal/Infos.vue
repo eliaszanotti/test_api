@@ -57,7 +57,6 @@
 
 <script setup>
 import { usePersonnalStore } from '@/store/usePersonnalStore';
-import { defineEmits } from 'vue';
 import CardTitle from '../global/CardTitle.vue';
 import TextInput from '../input/TextInput.vue';
 import NumberInput from '../input/NumberInput.vue';

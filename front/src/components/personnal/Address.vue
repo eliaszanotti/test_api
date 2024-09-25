@@ -43,7 +43,6 @@
 
 <script setup>
 import { usePersonnalStore } from '@/store/usePersonnalStore';
-import { defineEmits } from 'vue';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
 import CardTitle from '../global/CardTitle.vue';
 import AlertBox from '../global/AlertBox.vue';
