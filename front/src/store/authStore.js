@@ -50,9 +50,9 @@ export const useAuthStore = defineStore('auth', {
         },
         async logout() {
             try {
-                const response = await apiClient.post('/auth/logout/');
-                this.username = '';
                 this.accessToken = '';
+                this.username = '';
+                const response = await apiClient.post('/auth/logout/');
                 localStorage.removeItem('accessToken');
                 apiClient.defaults.headers.common['Authorization'] = '';
                 console.log('Logout:', response.data);

@@ -48,6 +48,8 @@ class RegisterView(generics.CreateAPIView):
 	serializer_class = UserSerializer
 
 class LogoutView(generics.GenericAPIView):
+	permission_classes = [AllowAny]
+
 	def post(self, request, *args, **kwargs):
 		response = Response(status=status.HTTP_200_OK)
 		response.delete_cookie('refresh_token')
