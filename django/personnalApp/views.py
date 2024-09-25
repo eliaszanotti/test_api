@@ -1,7 +1,10 @@
 from commonApp.views import BaseGetView, BaseUpdateGenericView
+from django.core.exceptions import ValidationError
+from rest_framework.response import Response
 from .models import Personnal
-from rest_framework import serializers
+from rest_framework import serializers, status
 from commonApp.constants import LICENSE_CHOICES
+import os, uuid
 
 class PersonnalSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -20,3 +23,26 @@ class PersonnalGetView(BaseGetView):
 class PersonnalUpdateView(BaseUpdateGenericView):
 	serializer_class = PersonnalSerializer
 	model = Personnal
+
+class PersonnalPictureUpdateView(BaseUpdateGenericView):
+	serializer_class = PersonnalSerializer
+	model = Personnal
+
+	def put(self, request, *args, **kwargs):
+		try:
+			personnal = self.get_object()
+			if 'picture' in request.FILES:
+				if personnal.picture:
+					personnal.picture.delete()
+				new_picture = request.FILES['picture']
+				extension = os.path.splitext(new_picture.name)[1]
+				new_filename = f"{uuid.uuid4()}{extension}"
+				new_picture.name = new_filename
+				personnal.picture = new_picture
+				personnal.save()
+				return Response({'success': 'Picture updated'}, status=status.HTTP_200_OK)
+			return Response({'error': 'No picture provided'}, status=status.HTTP_400_BAD_REQUEST)
+		except ValidationError as error:
+			return Response(error.message_dict, status=status.HTTP_400_BAD_REQUEST)
+		except Personnal.DoesNotExist:
+			return Response({'error': 'Personnal not found'}, status=status.HTTP_404_NOT_FOUND)

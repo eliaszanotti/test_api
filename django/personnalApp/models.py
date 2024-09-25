@@ -13,7 +13,7 @@ def validate_postal_code(value):
 
 class Personnal(models.Model):
 	cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='personnal')
-	# picture = models.ImageField(upload_to='pictures/', null=True, blank=True, default="")
+	picture = models.ImageField(upload_to='pictures/', null=True, blank=True, default="")
 	is_hidden = models.BooleanField(default=False)
 	name = models.CharField(max_length=50, blank=True)
 	first_name = models.CharField(max_length=50, blank=True)
