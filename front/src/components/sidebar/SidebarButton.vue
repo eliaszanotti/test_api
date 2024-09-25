@@ -1,12 +1,12 @@
 <template>
-    <a
+    <router-link
 		class="tooltip tooltip-right"
 		:data-tip="name" 
-		:href="currentPage ? null : url">
+		:to="currentPage ? null : url">
 		<SquareButton :ghost="!currentPage">
 			<slot></slot>
 		</SquareButton>	
-	</a>
+	</router-link>
 </template>
 
 <script setup>
