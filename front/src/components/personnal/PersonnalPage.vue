@@ -5,7 +5,7 @@
 			<!-- <Picture/> -->
 			<Infos @update:value="updateValue"/>
 			<Address @update:value="updateValue"/>
-			<!-- <Mobility/> -->
+			<Mobility @update:value="updateValue"/>
 		</SectionLayout>
 	</EditorLayout>
 </template>
