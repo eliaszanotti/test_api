@@ -11,6 +11,14 @@ def validate_postal_code(value):
 		raise ValidationError("Postal code must be a 5-digit number")
 
 class Personnal(models.Model):
+	LICENSE_CHOICES = [
+		'Aucun',
+		'BSR',
+		'Permis A',
+		'Permis B',
+		'Autre'
+	]
+
 	cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='personnal')
 	# picture = models.ImageField(upload_to='pictures/', null=True, blank=True, default="")
 	is_hidden = models.BooleanField(default=False)
@@ -18,13 +26,13 @@ class Personnal(models.Model):
 	first_name = models.CharField(max_length=50, blank=True)
 	phone = models.CharField(max_length=20, blank=True)
 	email = models.EmailField(max_length=254, blank=True)
-	age = models.IntegerField(validators=[validate_age], null=True, blank=True)  # Custom age field with validation
+	age = models.IntegerField(validators=[validate_age], null=True, blank=True)
 	birthdate = models.DateField(null=True, blank=True)
 	additional = models.CharField(max_length=50, blank=True)
 	postal_code = models.CharField(validators=[validate_postal_code], max_length=10, blank=True)
 	city = models.CharField(max_length=50, blank=True)
 	country = models.CharField(max_length=50, blank=True)
-	license = models.CharField(max_length=50, blank=True)
+	license = models.CharField(max_length=50, blank=True, default=LICENSE_CHOICES[0])
 	other_license = models.CharField(max_length=50, blank=True)
 	has_vehicle = models.BooleanField(default=False)
 	range = models.CharField(max_length=100, blank=True)
