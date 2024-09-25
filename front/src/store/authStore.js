@@ -10,11 +10,11 @@ export const useAuthStore = defineStore('auth', {
         async tokenRefresh() {
             try {
                 this.accessToken = '';
-                const response = await apiClient.post('/accounts/token/refresh/')
+                const response = await apiClient.post('/auth/refresh/');
 
-                const { access_token } = response.data;
-                this.accessToken = access_token;
-                localStorage.setItem('accessToken', access_token);
+                const { access } = response.data;
+                this.accessToken = access;
+                localStorage.setItem('accessToken', access);
                 apiClient.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
             } catch (error) {
                 throw error;
@@ -22,15 +22,15 @@ export const useAuthStore = defineStore('auth', {
         },
         async login(username, password) {
             try {
-                const response = await apiClient.post('/accounts/login/', {
+                const response = await apiClient.post('/auth/login/', {
                     username,
                     password
                 });
 
-                const { access_token } = response.data;
+                const { access } = response.data;
                 this.username = username;
-                this.accessToken = access_token;
-                localStorage.setItem('accessToken', access_token);
+                this.accessToken = access;
+                localStorage.setItem('accessToken', access);
                 apiClient.defaults.headers.common['Authorization'] = `Bearer ${this.accessToken}`;
                 console.log('Login:', response.data);
             } catch (error) {
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async profile() {
             try {
-                const response = await apiClient.get('/accounts/profile/');
+                const response = await apiClient.get('/auth/profile/');
                 console.log('Profile:', response.data);
             } catch (error) {
 				throw error;
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async logout() {
             try {
-                const response = await apiClient.post('/accounts/logout/');
+                const response = await apiClient.post('/auth/logout/');
                 this.username = '';
                 this.accessToken = '';
                 localStorage.removeItem('accessToken');
