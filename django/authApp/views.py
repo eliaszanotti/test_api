@@ -1,7 +1,7 @@
 from rest_framework import generics, serializers, status
 from .models import CustomUser
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.response import Response
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,6 +33,15 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 			)
 			del response.data['refresh']
 		return response
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+	def post(self, request, *args, **kwargs):
+		refresh_token = request.COOKIES.get('refresh_token')
+		if refresh_token is None:
+			return Response({'error': 'Refresh token is required'}, status=status.HTTP_400_BAD_REQUEST)
+		request.data['refresh'] = refresh_token
+		return super().post(request, *args, **kwargs)
 
 class RegisterView(generics.CreateAPIView):
 	queryset = CustomUser.objects.all()
