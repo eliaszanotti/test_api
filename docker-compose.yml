@@ -13,6 +13,7 @@ services:
     networks:
       - refactor
 
+  # TODO change to postgres
   mysql:
     image: mysql:9.0.1
     environment:
