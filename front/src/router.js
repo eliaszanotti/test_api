@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/store/authStore';
 
-import HomePage from './components/home/HomePage.vue';
-import PersonnalPage from './components/personnal/PersonnalPage.vue';
-import CustomizePage from './components/customize/CustomizePage.vue';
-import TitlePage from './components/title/TitlePage.vue';
-import LangPage from './components/lang/LangPage.vue';
-import ExperiencePage from './components/experience/ExperiencePage.vue';
-import FormationPage from './components/formation/FormationPage.vue';
-import HobbiePage from './components/hobbie/HobbiePage.vue';
-import DownloadPage from './components/download/DownloadPage.vue';
-import LoginPage from './components/auth/LoginPage.vue';
-import LogoutPage from './components/auth/LogoutPage.vue';
-import ProfilePage from './components/auth/ProfilePage.vue';
-import TokenRefreshPage from './components/auth/TokenRefreshPage.vue';
+const HomePage = () => import('./components/home/HomePage.vue');
+const PersonnalPage = () => import('./components/personnal/PersonnalPage.vue');
+const CustomizePage = () => import('./components/customize/CustomizePage.vue');
+const TitlePage = () => import('./components/title/TitlePage.vue');
+const LangPage = () => import('./components/lang/LangPage.vue');
+const ExperiencePage = () => import('./components/experience/ExperiencePage.vue');
+const FormationPage = () => import('./components/formation/FormationPage.vue');
+const HobbiePage = () => import('./components/hobbie/HobbiePage.vue');
+const DownloadPage = () => import('./components/download/DownloadPage.vue');
+const LoginPage = () => import('./components/auth/LoginPage.vue');
+const LogoutPage = () => import('./components/auth/LogoutPage.vue');
+const ProfilePage = () => import('./components/auth/ProfilePage.vue');
+const TokenRefreshPage = () => import('./components/auth/TokenRefreshPage.vue');
 
 const routes = [
 	{
@@ -23,34 +23,42 @@ const routes = [
 	{
 		path: '/personnal',
 		component: PersonnalPage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/customize',
 		component: CustomizePage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/title',
 		component: TitlePage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/lang',
 		component: LangPage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/experience',
 		component: ExperiencePage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/formation',
 		component: FormationPage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/hobbie',
 		component: HobbiePage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/download',
 		component: DownloadPage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/login',
@@ -63,6 +71,7 @@ const routes = [
 	{
 		path: '/profile',
 		component: ProfilePage,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: '/refresh',
@@ -73,6 +82,15 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	const authStore = useAuthStore();
+	if (to.meta.requiresAuth && !authStore.isLogged) {
+		next('/login');
+	} else {
+		next();
+	}
 });
 
 export default router;
