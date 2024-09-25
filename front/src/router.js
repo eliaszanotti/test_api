@@ -13,7 +13,6 @@ const DownloadPage = () => import('./components/download/DownloadPage.vue');
 const LoginPage = () => import('./components/auth/LoginPage.vue');
 const LogoutPage = () => import('./components/auth/LogoutPage.vue');
 const ProfilePage = () => import('./components/auth/ProfilePage.vue');
-const TokenRefreshPage = () => import('./components/auth/TokenRefreshPage.vue');
 
 const routes = [
 	{
@@ -73,10 +72,6 @@ const routes = [
 		component: ProfilePage,
 		meta: { requiresAuth: true },
 	},
-	{
-		path: '/refresh',
-		component: TokenRefreshPage,
-	}
 ];
 
 const router = createRouter({

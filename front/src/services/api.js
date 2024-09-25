@@ -29,7 +29,7 @@ apiClient.interceptors.response.use(
                 originalRequest.headers['Authorization'] = `Bearer ${authStore.accessToken}`;
                 return await apiClient(originalRequest);
             } catch (refreshError) {
-                // rooter.push('/login');
+                rooter.push('/login');
                 console.error('Refresh Token error:', refreshError);
                 return Promise.reject(refreshError);
             }
