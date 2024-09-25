@@ -1,6 +1,7 @@
 from commonApp.views import BaseGetView, BaseUpdateGenericView
 from .models import Personnal
 from rest_framework import serializers
+from commonApp.constants import LICENSE_CHOICES
 
 class PersonnalSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -13,7 +14,7 @@ class PersonnalGetView(BaseGetView):
 
 	def get(self, request, *args, **kwargs):
 		response = super().get(request, *args, **kwargs)
-		response.data['license_choices'] = Personnal.LICENSE_CHOICES
+		response.data['license_choices'] = LICENSE_CHOICES
 		return response
 
 class PersonnalUpdateView(BaseUpdateGenericView):

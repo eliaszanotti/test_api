@@ -1,6 +1,7 @@
 from django.db import models
 from cvApp.models import Cv
 from django.core.exceptions import ValidationError
+from commonApp.constants import LICENSE_CHOICES
 
 def validate_age(value):
 	if value < 0 or value > 150:
@@ -11,14 +12,6 @@ def validate_postal_code(value):
 		raise ValidationError("Postal code must be a 5-digit number")
 
 class Personnal(models.Model):
-	LICENSE_CHOICES = [
-		'Aucun',
-		'BSR',
-		'Permis A',
-		'Permis B',
-		'Autre'
-	]
-
 	cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='personnal')
 	# picture = models.ImageField(upload_to='pictures/', null=True, blank=True, default="")
 	is_hidden = models.BooleanField(default=False)
