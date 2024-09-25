@@ -1,5 +1,5 @@
 <template>
-	<section class="card w-3/5 max-w-lg max-h-4/5 bg-base-200 border border-base-300 p-card gap-md">
+	<section class="card w-3/5 max-w-lg max-h-4/5 bg-base-200 p-card gap-md shadow-sm">
 		<h1 class="text-3xl">Bienvenue !</h1>
 		<p>Connectez-vous pour accéder à vos CV et les modifier.</p>
 		<form @submit.prevent="handleSubmit">
