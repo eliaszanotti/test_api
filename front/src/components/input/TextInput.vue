@@ -1,19 +1,15 @@
 <template>
 	<div class="form-control">
 		<span class="label label-text">{{ label }}</span>
-		<div 
-			class="input grid grid-cols-[1fr,auto] items-center gap-3 shadow-sm bg-base-200"
+		<input 
+			type="text"
+			class="input shadow-sm bg-base-200"
 			:class="customClass"
+			:placeholder="placeholder" 
+			:name="name" 
+			:value="value"
+			@input="updateValue($event)"
 		>
-			<input 
-				type="text"
-				:placeholder="placeholder" 
-				:name="name" 
-				:value="value"
-				@input="updateValue($event)"
-			>
-			<slot></slot>
-		</div>
 	</div>
 </template>
 
