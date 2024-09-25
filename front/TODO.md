@@ -1,0 +1,1 @@
+Pour la prochaine fois creer les store pour chaque page en commencant par personnal car elle est deja faite
