@@ -28,28 +28,22 @@
 	</section>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/authStore';
 
-export default defineComponent({
-	name: 'LoginForm',
-	data() {
-		return {
-			username: '',
-			password: '',
-		};
-	},
-	methods: {
-		async handleSubmit() {
-			const authStore = useAuthStore();
-			try {
-				await authStore.login(this.username, this.password);
-				this.$router.push('/');
-			} catch (error) {
-				console.error('Login failed:', error.response.data);
-			}
-		}
-	},
-});
+const username = ref('');
+const password = ref('');
+const authStore = useAuthStore();
+const router = useRouter();
+
+async function handleSubmit() {
+	try {
+		await authStore.login(username.value, password.value);
+		router.push('/');
+	} catch (error) {
+		console.error('Login failed:', error.response.data);
+	}
+}
 </script>
