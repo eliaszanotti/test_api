@@ -4,7 +4,7 @@
 		<SectionLayout>
 			<!-- <Picture/> -->
 			<Infos @update:value="updateValue"/>
-			<!-- <Address/> -->
+			<Address @update:value="updateValue"/>
 			<!-- <Mobility/> -->
 		</SectionLayout>
 	</EditorLayout>
