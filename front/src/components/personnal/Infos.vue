@@ -6,15 +6,15 @@
 				label="Prénom"
 				placeholder="Jean"
 				name="first_name"
-				:value="data.first_name"
-				@update:value="updateValue"
+				:value="personnalStore.data.first_name"
+				@update:value="emitUpdate"
 			/>
 			<TextInput
 				label="Nom"
 				placeholder="Dupont"
 				name="name"
-				:value="data.name"
-				@update:value="updateValue"
+				:value="personnalStore.data.name"
+				@update:value="emitUpdate"
 			/>
 		</div>
 		<div class="grid grid-cols-3 gap-md">
@@ -22,23 +22,23 @@
 				label="Téléphone"
 				placeholder="06 12 34 56 78"
 				name="phone"
-				:value="data.phone"
-				@update:value="updateValue"
+				:value="personnalStore.data.phone"
+				@update:value="emitUpdate"
 			/>
 			<TextInput
 				class="col-span-2"	
 				label="Email"
 				placeholder="jean@jobmania.fr"
 				name="email"
-				:value="data.email"
-				@update:value="updateValue"
+				:value="personnalStore.data.email"
+				@update:value="emitUpdate"
 			/>
 			<NumberInput
 				label="Âge"
 				placeholder="20"
 				name="age"
-				:value=data.age
-				@update:value="updateValue"
+				:value="personnalStore.data.age"
+				@update:value="emitUpdate"
 				:min=0
 				:max=150
 			/>
@@ -48,42 +48,24 @@
 				label="Date de naissance"
 				placeholder="01/01/2000"
 				name="birthdate"
-				:value="data.birthdate"
-				@update:value="updateValue"
+				:value="personnalStore.data.birthdate"
+				@update:value="emitUpdate"
 			/>
 		</div>
 	</SubSectionLayout>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue';
-import apiClient from '@/services/api';
+import { usePersonnalStore } from '@/store/usePersonnalStore';
+import { defineEmits } from 'vue';
 import CardTitle from '../global/CardTitle.vue';
 import TextInput from '../input/TextInput.vue';
 import NumberInput from '../input/NumberInput.vue';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
 
-const data = reactive({});
-
-const updateValue = async ({name, value}) => {
-	try {
-		let sendData = {[name]: value,}
-		await apiClient.put('/cv_personnal/update/', sendData);
-	} catch (error) {
-		console.error('Erreur lors de la mise à jour des informations personnelles :');
-	}
+const personnalStore = usePersonnalStore();
+const emit = defineEmits(['update:value']);
+const emitUpdate = ({name, value}) => {
+	emit('update:value', {name, value});
 };
-
-const fetchData = async () => {
-	try {
-		const response = await apiClient.get('/cv_personnal/infos/');
-		Object.assign(data, response.data);
-	} catch (error) {
-		console.error('Erreur lors de la récupération des informations personnelles :');
-	}
-};
-
-onMounted(() => {
-	fetchData();
-});
 </script>
