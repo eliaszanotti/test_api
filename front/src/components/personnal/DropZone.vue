@@ -63,20 +63,20 @@ const resizeAndCompressImage = async (file) => {
 };
 
 const processFiles = async (files) => {
-	if (files.length > 1) {
-		console.error('Please select 1 file only');
-		return;
-	}
-	const file = files[0];
-	if (!file.type.startsWith('image/')) {
-		console.error('Invalid file type:', file.type);
-		return;
-	}
-	try {
+    if (files.length !== 1) {
+        console.error('Please select 1 file only');
+        return;
+    }
+    const file = files[0];
+    if (!file.type.startsWith('image/')) {
+        console.error('Invalid file type:', file.type);
+        return;
+    }
+    try {
         const compressedFile = await resizeAndCompressImage(file);
-		await personnalStore.updatePicture(compressedFile);
-	} catch (error) {
-		console.error('Erreur lors de la compression de l\'image:', error);
-	}
+        await personnalStore.updatePicture(compressedFile);
+    } catch (error) {
+        console.error('Erreur lors de la compression de l\'image:', error);
+    }
 };
 </script>
