@@ -1,11 +1,12 @@
 <template>
 	<button class="relative rounded-btn overflow-hidden border border-base-300">
-		<!-- <img class="object-cover object-center pointer-events-none" src="{% static 'mainApp/templates/' %}{{ template.name }}.png"> -->
-		
-		<p>ok</p>
+		<img 
+			class="object-cover object-center pointer-events-none" 
+			:src="`templates/template${template.id}.png`"
+		>
 		<div 
-			v-if="template == settingsStore.data.template.id"
-			class="pointer-events-none absolute inset-0 bg-primary/25">okkk
+			v-if="template.id == settingsStore.data.template"
+			class="pointer-events-none absolute inset-0 bg-primary/25">
 		</div>
 	</button>
 </template>
@@ -13,4 +14,11 @@
 <script setup>
 import { useSettingsStore } from '@/store/useSettingsStore';
 const settingsStore = useSettingsStore();
+
+const props = defineProps({
+	template: {
+		type: Object,
+		required: true
+	}
+});
 </script>

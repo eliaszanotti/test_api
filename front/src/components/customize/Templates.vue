@@ -4,7 +4,7 @@
 		<div class="grid grid-cols-4 gap-md">
 			<TemplateCard 
 				v-for="template in settingsStore.data.templates_choices"
-				:key="template" 
+				:key="template.id" 
 				:template="template"
 			/>
         </div>
