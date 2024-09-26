@@ -27,6 +27,11 @@ class SettingsUpdateView(BaseUpdateGenericView):
     serializer_class = SettingsSerializer
     model = Settings
 
+    def put(self, request, *args, **kwargs):
+        if 'template' in request.data:
+            print("Template field is being modified")
+        return super().put(request, *args, **kwargs)
+
 class ColorSchemeGetView(generics.GenericAPIView):
     """
     This function retrieves the color scheme associated with the given template ID.
