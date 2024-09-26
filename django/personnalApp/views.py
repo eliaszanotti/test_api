@@ -1,8 +1,9 @@
-from commonApp.views import BaseGetView, BaseUpdateGenericView
 from django.core.exceptions import ValidationError
 from rest_framework.response import Response
-from .models import Personnal
 from rest_framework import serializers, status
+from rest_framework.views import APIView
+from commonApp.views import BaseGetView, BaseUpdateGenericView
+from .models import Personnal
 from commonApp.constants import LICENSE_CHOICES
 import os, uuid
 
@@ -24,13 +25,12 @@ class PersonnalUpdateView(BaseUpdateGenericView):
 	serializer_class = PersonnalSerializer
 	model = Personnal
 
-class PersonnalPictureUpdateView(BaseUpdateGenericView):
-	serializer_class = PersonnalSerializer
-	model = Personnal
-
+class PersonnalPictureUpdateView(APIView):
 	def put(self, request, *args, **kwargs):
 		try:
-			personnal = self.get_object()
+			user = request.user
+			cv = user.current_cv
+			personnal = Personnal.objects.get_or_create(cv=cv)[0]
 			if 'picture' in request.FILES:
 				if personnal.picture:
 					personnal.picture.delete()
