@@ -37,7 +37,7 @@
 				label="Âge"
 				placeholder="20"
 				name="age"
-				:value="personnalStore.data.age"
+				:value="Number(personnalStore.data.age)"
 				@update:value="updateValue"
 				:min=0
 				:max=150
