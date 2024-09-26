@@ -3,9 +3,9 @@
 		<CardTitle>Modèles</CardTitle>
 		<div class="grid grid-cols-4 gap-md">
 			<TemplateCard 
-				v-for="template in settingsStore.data.templates_choices"
-				:key="template.id" 
-				:template="template"
+				v-for="(template, index) in settingsStore.data.templates_choices"
+				:key="index" 
+				:index="index"
 			/>
         </div>
 	</SubSectionLayout>

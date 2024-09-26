@@ -74,12 +74,12 @@ SCHEMES = [
 ]
 
 TEMPLATES = [
-    {"id": 0, **SCHEMES[0]},
-    {"id": 1, **SCHEMES[1]},
-    {"id": 2, **SCHEMES[2]},
-    {"id": 3, **SCHEMES[3]},
-    {"id": 4, **SCHEMES[4]},
-    {"id": 5, **SCHEMES[1]},
-    {"id": 6, **SCHEMES[4]},
-    {"id": 7, **SCHEMES[5]},
+    SCHEMES[0],
+    SCHEMES[1],
+    SCHEMES[2],
+    SCHEMES[3],
+    SCHEMES[4],
+    SCHEMES[1],
+    SCHEMES[4],
+    SCHEMES[5],
 ]
