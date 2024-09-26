@@ -1,5 +1,5 @@
 <template>
-	<button class="relative rounded-btn overflow-hidden border border-base-300">
+	<button class="relative rounded-btn overflow-hidden border border-base-300" @click="updateValue">
 		<img 
 			class="object-cover object-center pointer-events-none" 
 			:src="`templates/template${index}.png`"
@@ -18,4 +18,8 @@ const settingsStore = useSettingsStore();
 const props = defineProps({
 	index: Number
 });
+
+const updateValue = () => {
+	settingsStore.updateValue({name: 'template', value: props.index});
+};
 </script>
