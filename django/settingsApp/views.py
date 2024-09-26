@@ -2,7 +2,7 @@ from commonApp.views import BaseGetView, BaseUpdateGenericView
 from .models import Settings
 from rest_framework import serializers, status, generics
 from rest_framework.response import Response
-from .schemes import SCHEMES
+from .schemes import SCHEMES, TEMPLATES
 from commonApp.constants import SETTINGS_FONT_SIZES_CHOICES
 
 class SettingsSerializer(serializers.ModelSerializer):
@@ -20,6 +20,7 @@ class SettingsGetView(BaseGetView):
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         response.data['sizes_choices'] = SETTINGS_FONT_SIZES_CHOICES
+        response.data['templates_choices'] = TEMPLATES
         return response
 
 class SettingsUpdateView(BaseUpdateGenericView):

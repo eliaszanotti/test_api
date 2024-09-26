@@ -10,12 +10,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useCvCustomizeStore } from '@/store/cvCustomizeStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
 import CardTitle from '../global/CardTitle.vue';
 import ColorSelector from './ColorSelector.vue';
 
-const cvCustomizeStore = useCvCustomizeStore();
-const schemes = computed(() => cvCustomizeStore.cvSchemes);
+const settingsStore = useSettingsStore();
 </script>
