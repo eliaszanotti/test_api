@@ -8,14 +8,14 @@
 				placeholder="Arrêt de bus, étage, etc."
 				name="additional"
 				:value="personnalStore.data.additional"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<TextInput
 				label="Code postal"
 				placeholder="69006"
 				name="postal_code"
 				:value="personnalStore.data.postal_code"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 		<AlertBox classColor="alert-info">
@@ -27,7 +27,7 @@
 				placeholder="Lyon"
 				name="city"
 				:value="personnalStore.data.city"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<!-- TODO change to select country input champs hybrid libre ou parmis un liste (autocompletion) -->
 			<TextInput
@@ -35,7 +35,7 @@
 				placeholder="France"
 				name="country"
 				:value="personnalStore.data.country"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 	</SubSectionLayout>
@@ -49,8 +49,7 @@ import AlertBox from '../global/AlertBox.vue';
 import TextInput from '../input/TextInput.vue';
 
 const personnalStore = usePersonnalStore();
-const emit = defineEmits(['update:value']);
-const emitUpdate = ({name, value}) => {
-	emit('update:value', {name, value});
+const updateValue = ({name, value}) => {
+	personnalStore.updateValue({name, value});
 };
 </script>

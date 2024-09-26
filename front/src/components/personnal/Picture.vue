@@ -4,7 +4,7 @@
 		<div class="grid gap-md grid-cols-[auto,1fr]">
 			<div class="h-full flex flex-col items-center gap-md">
 				<PictureDisplay/>
-				<HideButton @click="emitUpdate"/>
+				<HideButton/>
 			</div>
 			<DropZone/>
 		</div>
@@ -17,9 +17,4 @@ import PictureDisplay from './PictureDisplay.vue';
 import HideButton from './HideButton.vue';
 import DropZone from './DropZone.vue';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
-
-const emit = defineEmits(['update:value']);
-const emitUpdate = ({name, value}) => {
-	emit('update:value', {name, value});
-};
 </script>

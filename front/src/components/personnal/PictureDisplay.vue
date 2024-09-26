@@ -14,6 +14,5 @@
 
 <script setup>
 import { usePersonnalStore } from '@/store/usePersonnalStore';
-
 const personnalStore = usePersonnalStore();
 </script>

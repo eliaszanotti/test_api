@@ -3,9 +3,9 @@
 	<EditorLayout>
 		<SectionLayout>
 			<Picture/>
-			<Infos @update:value="updateValue"/>
-			<Address @update:value="updateValue"/>
-			<Mobility @update:value="updateValue"/>
+			<Infos/>
+			<Address/>
+			<Mobility/>
 		</SectionLayout>
 	</EditorLayout>
 </template>
@@ -22,13 +22,7 @@ import Address from './Address.vue';
 import Mobility from './Mobility.vue';
 
 const personnalStore = usePersonnalStore();
-
-const updateValue = async ({name, value}) => {
-	await personnalStore.updateValue({name, value});
-};
-
 onMounted(async () => {
 	await personnalStore.fetchData();
-	console.log(personnalStore.data);
 });
 </script>

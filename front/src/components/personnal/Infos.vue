@@ -7,14 +7,14 @@
 				placeholder="Jean"
 				name="first_name"
 				:value="personnalStore.data.first_name"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<TextInput
 				label="Nom"
 				placeholder="Dupont"
 				name="name"
 				:value="personnalStore.data.name"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 		<div class="grid grid-cols-3 gap-md">
@@ -23,7 +23,7 @@
 				placeholder="06 12 34 56 78"
 				name="phone"
 				:value="personnalStore.data.phone"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<TextInput
 				class="col-span-2"	
@@ -31,14 +31,14 @@
 				placeholder="jean@jobmania.fr"
 				name="email"
 				:value="personnalStore.data.email"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<NumberInput
 				label="Âge"
 				placeholder="20"
 				name="age"
 				:value="personnalStore.data.age"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 				:min=0
 				:max=150
 			/>
@@ -49,7 +49,7 @@
 				placeholder="01/01/2000"
 				name="birthdate"
 				:value="personnalStore.data.birthdate"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 	</SubSectionLayout>
@@ -63,8 +63,7 @@ import NumberInput from '../input/NumberInput.vue';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
 
 const personnalStore = usePersonnalStore();
-const emit = defineEmits(['update:value']);
-const emitUpdate = ({name, value}) => {
-	emit('update:value', {name, value});
+const updateValue = async ({name, value}) => {
+	await personnalStore.updateValue({name, value});
 };
 </script>

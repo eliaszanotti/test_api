@@ -7,14 +7,14 @@
 				name="license"
 				:value="personnalStore.data.license"
 				:items="personnalStore.data.license_choices"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<CheckBoxInput
 				v-if="personnalStore.data.license !== 'Aucun'"
 				label="Véhicule"
 				name="has_vehicle"
 				:checked="personnalStore.data.has_vehicle"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 		<div class="max-w-[400px] grid gap-md">
@@ -24,14 +24,14 @@
 				placeholder="Permis"
 				name="other_license"
 				:value="personnalStore.data.other_license"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 			<TextInput
 				label="Champ de mobilité"
 				placeholder="Départemental, régional, national, etc."
 				name="range"
 				:value="personnalStore.data.range"
-				@update:value="emitUpdate"
+				@update:value="updateValue"
 			/>
 		</div>
 		<AlertBox classColor="alert-info">
@@ -50,8 +50,7 @@ import SelectInput from '../input/SelectInput.vue';
 import CheckBoxInput from '../input/CheckBoxInput.vue';
 
 const personnalStore = usePersonnalStore();
-const emit = defineEmits(['update:value']);
-const emitUpdate = ({name, value}) => {
-	emit('update:value', {name, value});
+const updateValue = ({name, value}) => {
+	personnalStore.updateValue({name, value});
 };
 </script>

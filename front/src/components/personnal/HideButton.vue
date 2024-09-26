@@ -14,10 +14,7 @@ import { usePersonnalStore } from '@/store/usePersonnalStore';
 import TextButton from '../button/TextButton.vue';
 
 const personnalStore = usePersonnalStore();
-
-const emit = defineEmits(['click']);
 const handleClick = () => {
 	personnalStore.updateValue({name: 'is_hidden', value: !personnalStore.data.is_hidden});
-	emit('click', {name: 'is_hidden', value: personnalStore.data.is_hidden});
 };
 </script>
