@@ -25,7 +25,6 @@
 <script setup>
 import { ref } from 'vue';
 import { usePersonnalStore } from '@/store/usePersonnalStore';
-import apiClient from '@/services/api';
 import imageCompression from 'browser-image-compression';
 
 const fileInput = ref(null);
@@ -63,20 +62,6 @@ const resizeAndCompressImage = async (file) => {
     return await imageCompression(file, options);
 };
 
-const emit = defineEmits(['dropped']);
-const updatePicture = async (file) => {
-	try {
-		let formData = new FormData();
-		formData.append('picture', file);
-		await apiClient.put('/personnal/picture/update/', formData).then(() => {
-			emit('dropped');
-			personnalStore.fetchData();
-		});
-	} catch (error) {
-		console.error('Erreur lors de la récupération de l\'adresse :');
-	}
-};
-
 const processFiles = async (files) => {
 	if (files.length > 1) {
 		console.error('Please select 1 file only');
@@ -89,7 +74,7 @@ const processFiles = async (files) => {
 	}
 	try {
         const compressedFile = await resizeAndCompressImage(file);
-		updatePicture(compressedFile);
+		await personnalStore.updatePicture(compressedFile);
 	} catch (error) {
 		console.error('Erreur lors de la compression de l\'image:', error);
 	}

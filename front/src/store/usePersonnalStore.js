@@ -14,9 +14,9 @@ export const usePersonnalStore = defineStore('personnal', () => {
 		}
 	};
 
-	const updateValue = async ({ name, value }) => {
+	const updateValue = async ({name, value}) => {
 		try {
-			let sendData = { [name]: value };
+			let sendData = {[name]: value};
 			await apiClient.put('/personnal/update/', sendData);
 			data[name] = value;
 		} catch (error) {
@@ -24,5 +24,16 @@ export const usePersonnalStore = defineStore('personnal', () => {
 		}
 	};
 
-	return { data, fetchData, updateValue };
+	const updatePicture = async (file) => {
+		try {
+			let formData = new FormData();
+			formData.append('picture', file);
+			await apiClient.put('/personnal/picture/update/', formData);
+			fetchData();
+		} catch (error) {
+			console.error('Erreur lors de la mise à jour de la photo :', error);
+		}
+	};
+
+	return { data, fetchData, updateValue, updatePicture };
 });
