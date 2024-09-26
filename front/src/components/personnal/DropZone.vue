@@ -24,11 +24,13 @@
 
 <script setup>
 import { ref } from 'vue';
+import { usePersonnalStore } from '@/store/usePersonnalStore';
 import apiClient from '@/services/api';
 import imageCompression from 'browser-image-compression';
 
 const fileInput = ref(null);
 const isDragging = ref(false);
+const personnalStore = usePersonnalStore();
 
 const triggerFileInput = () => {
     fileInput.value.click();
@@ -66,8 +68,9 @@ const updatePicture = async (file) => {
 	try {
 		let formData = new FormData();
 		formData.append('picture', file);
-		await apiClient.put('/cv_personnal/picture/', formData).then(() => {
+		await apiClient.put('/personnal/picture/update/', formData).then(() => {
 			emit('dropped');
+			personnalStore.fetchData();
 		});
 	} catch (error) {
 		console.error('Erreur lors de la récupération de l\'adresse :');

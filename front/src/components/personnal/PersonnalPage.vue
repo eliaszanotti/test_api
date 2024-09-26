@@ -2,7 +2,7 @@
 	<Header/>
 	<EditorLayout>
 		<SectionLayout>
-			<!-- <Picture/> -->
+			<Picture/>
 			<Infos @update:value="updateValue"/>
 			<Address @update:value="updateValue"/>
 			<Mobility @update:value="updateValue"/>
