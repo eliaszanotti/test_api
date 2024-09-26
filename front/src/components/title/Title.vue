@@ -5,13 +5,13 @@
 			label="Titre du poste recherché"
 			placeholder="Ex: Développeur Web"
 			name="title"
-			:value="data.title"
+			:value="titleStore.data.title"
 			@update:value="updateValue"
 		/>
 		<QuillEditor
 			label="Accroche"
 			name="details"
-			:value="data.details"
+			:value="titleStore.data.details"
 			@update:value="updateValue"
 		/>
 		<AlertBox
@@ -36,39 +36,15 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue';
-import apiClient from '@/services/api';
+import { useTitleStore } from '@/store/useTitleStore';
 import SubSectionLayout from '../layout/SubSectionLayout.vue';
 import CardTitle from '../global/CardTitle.vue';
 import TextInput from '../input/TextInput.vue';
 import QuillEditor from '../input/QuillEditor.vue';
 import AlertBox from '../global/AlertBox.vue';
 
-const data = reactive({});
-
-const props = defineProps({
-	type: String,
-});
-
+const titleStore = useTitleStore();
 const updateValue = async ({name, value}) => {
-	try {
-		let sendData = {[name]: value,}
-		await apiClient.put('/cv_title/update/', sendData);
-	} catch (error) {
-		console.error('Erreur lors de la mise à jour du titre :', error);
-	}
+	await titleStore.updateValue({name, value});
 };
-
-const fetchData = async () => {
-	try {
-		const response = await apiClient.get('/cv_title/title/');
-		Object.assign(data, response.data);
-	} catch (error) {
-		console.error('Erreur lors de la récupération des champs du titre :', error);
-	}
-};
-
-onMounted(() => {
-	fetchData();
-});
 </script>
