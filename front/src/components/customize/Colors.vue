@@ -1,11 +1,13 @@
 <template>
 	<SubSectionLayout>
 		<CardTitle>Couleurs</CardTitle>
-		<ColorSelector 
-			v-for="(colors, name) in schemes"
-			:name="name"
-			:colors="colors"
-		/>
+		<div v-if="settingsStore.data.templates_choices && settingsStore.data.templates_choices.length > 0">
+			<ColorSelector 
+				v-for="(colors, name) in settingsStore.data.templates_choices[settingsStore.data.template]"
+				:name="name"
+				:colors="colors"
+			/>
+		</div>
 	</SubSectionLayout>
 </template>
 
