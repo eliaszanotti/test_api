@@ -12,6 +12,7 @@
 </template>
 
 <script setup>
+import { useSettingsStore } from '@/store/useSettingsStore.js';
 import { onMounted } from 'vue';
 import Header from '@/components/header/Header.vue';
 import EditorLayout from '../layout/EditorLayout.vue';
@@ -22,9 +23,7 @@ import ExperienceFirst from './ExperienceFirst.vue';
 import FontSize from './FontSize.vue';
 import Colors from './Colors.vue';
 
-import { useCvCustomizeStore } from '@/store/cvCustomizeStore.js';
-
-const store = useCvCustomizeStore();
+const store = useSettingsStore();
 onMounted(() => {
 	store.fetchData();
 });
