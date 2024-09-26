@@ -1,5 +1,6 @@
 from django.db import models
 from cvApp.models import Cv
+from commonApp.constants import SETTINGS_FONT_SIZES_CHOICES
 
 class Settings(models.Model):
 	cv = models.OneToOneField(Cv, on_delete=models.CASCADE, related_name='settings')
@@ -10,4 +11,4 @@ class Settings(models.Model):
 	third_color = models.CharField(max_length=7, blank=True)
 	dark_color = models.CharField(max_length=7, blank=True)
 	light_color = models.CharField(max_length=7, blank=True)
-	size = models.CharField(max_length=50, blank=True)
+	size = models.CharField(max_length=50, blank=True, default=SETTINGS_FONT_SIZES_CHOICES[0])
