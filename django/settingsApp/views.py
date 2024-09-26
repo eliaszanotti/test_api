@@ -3,7 +3,7 @@ from .models import Settings
 from rest_framework import serializers, status, generics
 from rest_framework.response import Response
 from .schemes import SCHEMES
-from .sizes import SIZES
+from commonApp.constants import SIZES
 
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
